@@ -1,6 +1,6 @@
 {
-  "name": "class-validator",
-  "version": "0.14.0",
+  "name": "open-class-validator",
+  "version": "0.14.5",
   "description": "Decorator-based property validation for classes.",
   "author": "TypeStack contributors",
   "license": "MIT",
@@ -31,6 +31,8 @@
     "prettier:check": "prettier --check \"**/*.{ts,md}\"",
     "lint:fix": "eslint --max-warnings 0 --fix --ext .ts src/",
     "lint:check": "eslint --max-warnings 0 --ext .ts src/",
+    "publish-sh": "cp package.json ./build/package.json",
+    "publish": "npm publish ./build --access=public",
     "test": "jest --coverage --verbose",
     "test:watch": "jest --watch",
     "test:ci": "jest --runInBand --no-cache --coverage --verbose"

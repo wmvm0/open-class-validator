@@ -59,7 +59,7 @@ export function registerDecorator(options: ValidationDecoratorOptions): void {
   } else {
     const validator = options.validator;
     constraintCls = class CustomConstraint implements ValidatorConstraintInterface {
-      validate(value: any, validationArguments?: ValidationArguments): Promise<boolean> | boolean {
+      validate(value: any, validationArguments?: ValidationArguments): Promise<boolean> | boolean | string {
         return validator.validate(value, validationArguments);
       }
 

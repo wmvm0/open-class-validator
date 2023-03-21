@@ -283,6 +283,15 @@ export class ValidationExecutor {
               }
             });
             this.awaitingPromises.push(promise);
+          } else if (typeof validatedValue === 'string') {
+            const [type, message] = this.createValidationError(
+              object,
+              value,
+              metadata,
+              customConstraintMetadata,
+              validatedValue
+            );
+            error.constraints[type] = message;
           } else {
             if (!validatedValue) {
               const [type, message] = this.createValidationError(object, value, metadata, customConstraintMetadata);
@@ -396,7 +405,8 @@ export class ValidationExecutor {
     object: object,
     value: any,
     metadata: ValidationMetadata,
-    customValidatorMetadata?: ConstraintMetadata
+    customValidatorMetadata?: ConstraintMetadata,
+    customMessage?: string
   ): [string, string] {
     const targetName = object.constructor ? (object.constructor as any).name : undefined;
     const type = this.getConstraintType(metadata, customValidatorMetadata);
@@ -409,12 +419,16 @@ export class ValidationExecutor {
     };
 
     let message = metadata.message || '';
-    if (
-      !metadata.message &&
-      (!this.validatorOptions || (this.validatorOptions && !this.validatorOptions.dismissDefaultMessages))
-    ) {
-      if (customValidatorMetadata && customValidatorMetadata.instance.defaultMessage instanceof Function) {
-        message = customValidatorMetadata.instance.defaultMessage(validationArguments);
+    if (customMessage) {
+      message = customMessage;
+    } else {
+      if (
+        !metadata.message &&
+        (!this.validatorOptions || (this.validatorOptions && !this.validatorOptions.dismissDefaultMessages))
+      ) {
+        if (customValidatorMetadata && customValidatorMetadata.instance.defaultMessage instanceof Function) {
+          message = customValidatorMetadata.instance.defaultMessage(validationArguments);
+        }
       }
     }
 

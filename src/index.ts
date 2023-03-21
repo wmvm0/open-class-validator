@@ -21,6 +21,10 @@ export * from './validation/Validator';
 export * from './validation-schema/ValidationSchema';
 export * from './register-decorator';
 export * from './metadata/MetadataStorage';
+export * from './metadata/ConstraintMetadata';
+export * from './metadata/ValidationMetadata';
+export * from './metadata/ValidationMetadataArgs';
+export * from './validation/ValidationUtils';
 
 // -------------------------------------------------------------------------
 // Shortcut methods for api users
